@@ -1,0 +1,24 @@
+==================================================
+     REPORTE DE EVENTO ACADEMICO Y ACTIVIDADES     
+==================================================
+Nombre del Evento: Soda
+Cantidad de Actividades: 2
+--------------------------------------------------
+
+DETALLE DE LAS ACTIVIDADES:
+Tipo: Taller
+Nombre: salida
+Costo Base: $100.0
+Costo Material: $25.0
+Costo Final: $125.0
+--------------------------------------------------
+Tipo: Conferencia
+Nombre: Informatica
+Costo Base: $200.0
+Porcentaje Descuento: 50.0%
+Costo Final: $100.0
+--------------------------------------------------
+
+==================================================
+COSTO TOTAL DEL EVENTO: $225.0
+==================================================
