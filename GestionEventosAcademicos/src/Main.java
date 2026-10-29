@@ -10,14 +10,20 @@
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        // 1. Forzar la salida de la consola a UTF-8 para mostrar tildes y 'ñ' correctamente
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
+
+        // 2. Indicarle al Scanner que lea los datos de entrada en formato UTF-8
+        Scanner sc = new Scanner(System.in, StandardCharsets.UTF_8);
 
         Evento evento = null;
         Taller taller = null;
@@ -28,19 +34,19 @@ public class Main {
 
         do {
             System.out.println("\n==================================================");
-            System.out.println("     SISTEMA DE GESTION DE EVENTOS ACADEMICOS     ");
+            System.out.println("     SISTEMA DE GESTIÓN DE EVENTOS ACADÉMICOS     ");
             System.out.println("==================================================");
             System.out.println("1. [Paso 1] Crear un Evento");
             System.out.println("2. [Paso 2] Crear un Taller");
             System.out.println("3. [Paso 3] Crear una Conferencia");
             System.out.println("4. [Paso 4] Inicializar ArrayList<Actividad>");
             System.out.println("5. [Paso 5] Registrar Actividades en la Lista y en el Evento");
-            System.out.println("6. [Paso 6] Recorrer Lista y Mostrar Informacion");
+            System.out.println("6. [Paso 6] Recorrer Lista y Mostrar Información");
             System.out.println("7. [Paso 7] Calcular y Mostrar Costo Final de cada Actividad");
             System.out.println("8. [Paso 8] Calcular Costo Total del Evento");
             System.out.println("9. [Extra] Guardar reporte en archivo de texto (.txt)");
             System.out.println("10. Salir");
-            System.out.print("Seleccione una opcion (1-10): ");
+            System.out.print("Seleccione una opción (1-10): ");
 
             try {
                 opcion = Integer.parseInt(sc.nextLine());
@@ -53,7 +59,7 @@ public class Main {
                         String nombreEvento = sc.nextLine();
                         evento = new Evento(nombreEvento);
                         System.out.println("\n[RESULTADO ESPERADO]: Objeto Evento inicializado.");
-                        System.out.println("Evento creado con exito: " + evento.getNombre());
+                        System.out.println("Evento creado con éxito: " + evento.getNombre());
                     }
 
                     case 2 -> {
@@ -68,7 +74,7 @@ public class Main {
                         double cMatTaller = Double.parseDouble(sc.nextLine());
 
                         taller = new Taller(nomTaller, cBaseTaller, cMatTaller);
-                        System.out.println("\n[RESULTADO ESPERADO]: Objeto Taller valido.");
+                        System.out.println("\n[RESULTADO ESPERADO]: Objeto Taller válido.");
                         System.out.println("Taller registrado correctamente.");
                     }
 
@@ -84,7 +90,7 @@ public class Main {
                         double descConf = Double.parseDouble(sc.nextLine());
 
                         conferencia = new Conferencia(nomConf, cBaseConf, descConf);
-                        System.out.println("\n[RESULTADO ESPERADO]: Objeto Conferencia valido.");
+                        System.out.println("\n[RESULTADO ESPERADO]: Objeto Conferencia válido.");
                         System.out.println("Conferencia registrada correctamente.");
                     }
 
@@ -118,7 +124,7 @@ public class Main {
                             evento.agregarActividad(conferencia);
                         }
 
-                        System.out.println("[RESULTADO ESPERADO]: Dos Actividades registradas sin duplicar su calculo.");
+                        System.out.println("[RESULTADO ESPERADO]: Dos Actividades registradas sin duplicar su cálculo.");
                         System.out.println("Actividades asociadas exitosamente al evento '" + evento.getNombre() + "'.");
                         System.out.println("Total de actividades registradas: " + evento.getActividades().size());
                     }
@@ -126,9 +132,9 @@ public class Main {
                     case 6 -> {
                         System.out.println("--> PASO 6: Recorrer la lista");
                         if (listaActividades.isEmpty()) {
-                            System.out.println(" La lista de actividades esta vacia. Ejecute el Paso 5 primero.");
+                            System.out.println(" La lista de actividades está vacía. Ejecute el Paso 5 primero.");
                         } else {
-                            System.out.println("[RESULTADO ESPERADO]: Informacion individual de cada Actividad.\n");
+                            System.out.println("[RESULTADO ESPERADO]: Información individual de cada Actividad.\n");
                             for (Actividad act : listaActividades) {
                                 act.mostrarInfo();
                             }
@@ -138,9 +144,9 @@ public class Main {
                     case 7 -> {
                         System.out.println("--> PASO 7: Calcular el costo final de cada actividad");
                         if (listaActividades.isEmpty()) {
-                            System.out.println(" La lista de actividades esta vacia. Ejecute el Paso 5 primero.");
+                            System.out.println(" La lista de actividades está vacía. Ejecute el Paso 5 primero.");
                         } else {
-                            System.out.println("[RESULTADO ESPERADO]: Calculos correspondientes aplicados.\n");
+                            System.out.println("[RESULTADO ESPERADO]: Cálculos correspondientes aplicados.\n");
                             for (Actividad act : listaActividades) {
                                 System.out.println("Costo final de '" + act.getNombre() + "': $" + act.calcularCosto());
                             }
@@ -172,13 +178,13 @@ public class Main {
                         }
                     }
 
-                    case 10 -> System.out.println("Saliendo de la aplicacion...");
+                    case 10 -> System.out.println("Saliendo de la aplicación...");
 
-                    default -> System.out.println(" Opcion no valida. Ingrese un numero entre 1 y 10.");
+                    default -> System.out.println(" Opción no válida. Ingrese un número entre 1 y 10.");
                 }
 
             } catch (NumberFormatException e) {
-                System.out.println(" Error: Ingrese un numero válido.");
+                System.out.println(" Error: Ingrese un número válido.");
             } catch (IllegalArgumentException e) {
                 System.out.println(" Error de Validación: " + e.getMessage());
             }
@@ -189,14 +195,15 @@ public class Main {
     }
 
     /**
-     * Método auxiliar para escribir el reporte en un archivo .txt
+     * Método auxiliar para escribir el reporte en un archivo .txt con codificación UTF-8
      */
     private static void guardarReporteEnArchivo(Evento evento) {
         String nombreArchivo = "reporte_evento.txt";
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo))) {
+        // 3. Especificar StandardCharsets.UTF_8 en el FileWriter para que el .txt guarde bien las tildes
+        try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo, StandardCharsets.UTF_8))) {
             writer.println("==================================================");
-            writer.println("     REPORTE DE EVENTO ACADEMICO Y ACTIVIDADES     ");
+            writer.println("     REPORTE DE EVENTO ACADÉMICO Y ACTIVIDADES    ");
             writer.println("==================================================");
             writer.println("Nombre del Evento: " + evento.getNombre());
             writer.println("Cantidad de Actividades: " + evento.getActividades().size());
@@ -204,15 +211,13 @@ public class Main {
 
             writer.println("DETALLE DE LAS ACTIVIDADES:");
             for (Actividad act : evento.getActividades()) {
-                if (act instanceof Taller) {
-                    Taller t = (Taller) act;
+                if (act instanceof Taller t) {
                     writer.println("Tipo: Taller");
                     writer.println("Nombre: " + t.getNombre());
                     writer.println("Costo Base: $" + t.getCostoBase());
                     writer.println("Costo Material: $" + t.getCostoMaterial());
                     writer.println("Costo Final: $" + t.calcularCosto());
-                } else if (act instanceof Conferencia) {
-                    Conferencia c = (Conferencia) act;
+                } else if (act instanceof Conferencia c) {
                     writer.println("Tipo: Conferencia");
                     writer.println("Nombre: " + c.getNombre());
                     writer.println("Costo Base: $" + c.getCostoBase());
@@ -226,8 +231,8 @@ public class Main {
             writer.println("COSTO TOTAL DEL EVENTO: $" + evento.calcularCostoTotal());
             writer.println("==================================================");
 
-            System.out.println(" Reporte guardado con exito en el archivo '" + nombreArchivo + "'.");
-            System.out.println(" Ubicacion: Se encuentra en la carpeta raiz de tu proyecto NetBeans.");
+            System.out.println(" Reporte guardado con éxito en el archivo '" + nombreArchivo + "'.");
+            System.out.println(" Ubicación: Se encuentra en la carpeta raíz de tu proyecto NetBeans.");
 
         } catch (IOException e) {
             System.out.println(" Error al intentar guardar el archivo: " + e.getMessage());
